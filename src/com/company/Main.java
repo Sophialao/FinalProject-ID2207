@@ -16,7 +16,7 @@ public class Main
 
     public static void main(String[] args)
     {
-        //Login
+        boolean systemOn = true;
         boolean loggedIn=false;
         int employeeID = 0;
 
@@ -28,106 +28,110 @@ public class Main
 
         employeeData.startUp();
 
-        printBanner();
-        System.out.println("Welcome to the Swedish Event Planners system!\n" +
-                "\nPlease log in!");
 
        //Loop while not yet logged in
-        while(!loggedIn)
+        while(systemOn)
         {
-            employeeID = loginFacade.logIn(employeeData);
-            if(employeeID>0)
-                loggedIn=true;
-        }
-        //Get user details
-        Employee user = employeeData.getEmployee(employeeID);
-        String[] accessRights = employeeData.getAccessRights(user);
+            printBanner();
+            System.out.println("Welcome to the Swedish Event Planners system!\n" +
+                    "\nPlease log in!");
 
-        printMainMenu();
-        System.out.println("Welcome " + user.getName());
+            while (!loggedIn) {
+                employeeID = loginFacade.logIn(employeeData);
+                if (employeeID > 0)
+                    loggedIn = true;
+            }
+            Employee user = employeeData.getEmployee(employeeID);
+            System.out.println("Welcome " + user.getName());
 
-        //Loop when logged in
-        while(loggedIn)
-        {
-            showActions(user,eventData,requestFacade,eventFacade);
-            //loginFacade.selectAction(user);
-
+            printMainMenu();
+            showActions(user, eventData, requestFacade, eventFacade);
+            loggedIn = false;
+            //Loop when logged in
+            /*while (loggedIn)
+            {
+                printMainMenu();
+                showActions(user, eventData, requestFacade, eventFacade,loggedIn);
+                System.out.println("HI " + loggedIn);
+                //loginFacade.selectAction(user);
+            }*/
         }
     }
-    //Display available actions and check acces rights, loop while waiting for choice
+    //Display available actions and check access rights, loop while waiting for choice
     private static void showActions(Employee employee,EventData eventData,RequestFacade requestFacade, EventFacade eventFacade) {
 
         Scanner s = new Scanner(System.in);
-        System.out.println("What would you like to do? Please type the action in parentheses");
-
         //get access rights and print actions
         String[] accessRights = employee.getAccessRights();
-        for (int i = 0; i < accessRights.length; i++) {
-            System.out.println(accessRights[i]);
-        }
-        //let user access function if accessRights check out
+
+        System.out.println("What would you like to do? Please type the action exactly\n");
+        printActions(accessRights);
         String input = s.nextLine();
-        while (!input.equals("back")) {
-
-            //handle every action
-            if (checkInput(accessRights, input)) {
-            switch (input) {
+        while (!input.equals("log out"))
+        {
+            if(checkInput(accessRights, input))
+            {
+                switch (input)
+                {
                     //Event
-                case "view events":
-                    eventFacade.showEvents();
+                    case "view events":
+                        eventFacade.showEvents();
                     //if has rights allow update
-                    input="back";
-                    break;
+                        break;
                     //maybe "open event instead"
-                case "create event":
-                    eventFacade.createEvent();
-                    input="back";
-                    break;
-                case "update event":
-                    eventFacade.updateEvent();
-                    input="back";
-                    break;
-                    //not implemented yet
-                case "create task":
-                    requestFacade.createEventRequest();
-                    input="back";
-                    break;
-                    //Requests
-                case "view event requests":
-                    requestFacade.viewEventRequest();
-                    input="back";
-                    break;
-                case "create event request":
-                    requestFacade.createEventRequest();
-                    input="back";
-                    break;
-                    //stores 2x needs fix
-                case "update event request":
-                    requestFacade.updateEventRequest();
-                    input="back";
-                    break;
-                    //not implemented yet
-                case "create financial request":
-                    requestFacade.createFinancialRequest();
-                    input="back";
-                    break;
-                case "create HR request":
-                    requestFacade.createHRRequest();
-                    input="back";
-                    break;
+                    case "create event":
+                        eventFacade.createEvent();
+                        break;
+                    case "update event":
+                        eventFacade.updateEvent();
+                        break;
+                        //not implemented yet
+                    case "create task":
+                        requestFacade.createEventRequest();
+                        break;
+                        //Requests
+                    case "view event requests":
+                        requestFacade.viewEventRequest();
+                        break;
+                    case "create event request":
+                        requestFacade.createEventRequest();
+                        break;
+                        //stores 2x needs fix
+                    case "update event request":
+                        requestFacade.updateEventRequest();
+                        break;
+                     //not implemented yet
+                    case "create financial request":
+                        requestFacade.createFinancialRequest();
+                        break;
+                    case "create HR request":
+                        requestFacade.createHRRequest();
+                        break;
 
+                 }
             }
+            else {
+                System.out.println("Not a recognized command");
+                //break;
             }
-            else{
-                System.out.println("Nor a recognized command");
-                input="back";
-                break;
+            System.out.println("What would you like to do? Please type the action exactly\n");
+            printActions(accessRights);
+            input = s.nextLine();
+        }
+    }
+    private static void printActions(String[] accessRights)
+    {
+        for (int i = 0; i < accessRights.length; i++) {
+            System.out.print(accessRights[i] + ", ");
+            //This breaks up the list so it is easier to view
+            if(i%5 == 4)
+            {
+                System.out.println();
             }
         }
-        //goes back to
-        printMainMenu();
+        System.out.println("log out");
     }
-    //return true if user has accessright
+    //return true if user has access right
     private static boolean checkInput(String[] accessRights,String input){
         for(int i=0;i<accessRights.length;i++) {
             if(accessRights[i].equals(input)){
