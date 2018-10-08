@@ -14,8 +14,13 @@ public class EventHandler {
     //loop through hashmap and print names of event requests
     public void showEvents(){
         System.out.println("--- VIEW EVENTS ---");
+
         HashMap requests=eventData.getEvents();
 
+        if(requests.isEmpty())
+        {
+            System.out.println("There are currently no events");
+        }
         for (Object ev : requests.values()){
             //iterate over values
             Event e = (Event) ev;
