@@ -2,6 +2,18 @@
 
 Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
 
+All tasks are handled through events!!
+
+//Henri does this for next iteration
+//Not done - HR request, finical request, commenting on event requests and events
+//Adding comments on events
+
+//some way to link an event request to an event?
+
+
+//todo: make sure you can only make an event if there is an event request?
+//checking all input?
+
 //iteration 2
 
 -Overview-
@@ -48,10 +60,3 @@ Administration Manager - AManager:Pass<br/>
 Admin Employee - AEmployee1:Pass<br/>
 <br/>
 Vice President - VPresident:Pass<br/>
-
-### Tasks that can be done
-All employees can view events
-All managers can view employees, view clients, edit events, and view requests
-All admins have manager rights and can edit employees and edit clients.
-
-Customer service employees can make new event requests and view and edit clients.

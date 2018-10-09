@@ -1,6 +1,9 @@
 package com.company.Event;
 
 import com.company.RequestSub.EventRequest;
+import com.company.TaskSub.TaskFacade;
+import com.company.WorkerSub.Employee;
+import com.company.WorkerSub.EmployeeData;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -10,29 +13,81 @@ public class EventHandler {
     EventData eventData = new EventData();
     Scanner s = new Scanner(System.in);
 
-
     //loop through hashmap and print names of event requests
-    public void showEvents(){
-        System.out.println("--- VIEW EVENTS ---");
+    public boolean showEvents(){
 
         HashMap requests=eventData.getEvents();
 
         if(requests.isEmpty())
         {
-            System.out.println("There are currently no events");
+            System.out.println("There are currently no events\n");
+            return false;
         }
-        for (Object ev : requests.values()){
+
+        System.out.println("--- VIEW EVENTS ---");
+        for (Object ev : requests.values())
+        {
             //iterate over values
             Event e = (Event) ev;
             System.out.println(e.getName());
         }
+        return true;
     }
     //lists all saved event requests
-    public void viewEvent(){
-        showEvents();
-        readEvent(chooseEvent());
+    public void viewEvent(Employee employee, EmployeeData employeeData)
+    {
+        boolean hasEvents = showEvents();
+        if(!hasEvents)
+            return;
+        Event event = chooseEvent();
+        if(event == null)
+            return;
+        readEvent(event);
+
+        TaskFacade taskFacade = new TaskFacade();
+        String employeeType = employee.getEmployeeType();
+        Scanner s = new Scanner(System.in);
+        String input = new String();
+
+        while(!input.equals("exit"))
+        {
+            System.out.println("Would you like to do regarding this event?");
+
+            boolean manager = employeeType.equals("SManager") || employeeType.equals("FManager");
+            if (manager)
+            {
+                System.out.println("view tasks, assign task, edit tasks, or exit");
+            }
+            else {
+                System.out.println("view tasks, or exit");
+            }
+            input = s.nextLine();
+            switch (input) {
+                case "view tasks":
+                    taskFacade.viewTasks(event, employee.getEmployeeID(), manager);
+                    break;
+                case "assign task":
+                    if (!manager)
+                    {
+                        System.out.println("No permission");
+                        break;
+                    }
+                    taskFacade.createTask(event, employeeData);
+                    break;
+                case "edit tasks":
+                    System.out.println("There is currently no way to edit tasks on this system" +
+                            "\n we are working towards making this feature avaible.");
+                    break;
+                case "exit":
+                    break;
+                default:
+                    System.out.println("Not recognized");
+                    break;
+            }
+        }
+
     }
-    //allows usr to choose a request to continue with (update/view details)
+    //allows user to choose a request to continue with (update/view details)
     public Event chooseEvent(){
         System.out.println("Type the name of an event to continue");
         String name=s.nextLine();
@@ -74,7 +129,6 @@ public class EventHandler {
         System.out.print("Details: ");
         String details=s.nextLine();
         event.setDescription(details);
-
         //more
         return event;
     }

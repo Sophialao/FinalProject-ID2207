@@ -14,7 +14,7 @@ public class LoginHandler {
         System.out.print("Password: ");
         String password = s.nextLine();
 
-        System.out.println("UserName: "+userName +" password: "+password);
+        //System.out.println("UserName: "+userName +" password: "+password);
 
         return checkLogIn(userName,password,employeeData);
     }

@@ -45,7 +45,7 @@ public class Main
             System.out.println("Welcome " + user.getName());
 
             printMainMenu();
-            showActions(user, eventData, requestFacade, eventFacade);
+            showActions(user, eventData, requestFacade, eventFacade,employeeData);
             loggedIn = false;
             //Loop when logged in
             /*while (loggedIn)
@@ -58,7 +58,7 @@ public class Main
         }
     }
     //Display available actions and check access rights, loop while waiting for choice
-    private static void showActions(Employee employee,EventData eventData,RequestFacade requestFacade, EventFacade eventFacade) {
+    private static void showActions(Employee employee,EventData eventData,RequestFacade requestFacade, EventFacade eventFacade, EmployeeData employeeData) {
 
         Scanner s = new Scanner(System.in);
         //get access rights and print actions
@@ -75,7 +75,7 @@ public class Main
                 {
                     //Event
                     case "view events":
-                        eventFacade.showEvents();
+                        eventFacade.viewEvent(employee,employeeData);
                     //if has rights allow update
                         break;
                     //maybe "open event instead"
@@ -85,11 +85,6 @@ public class Main
                     case "update event":
                         eventFacade.updateEvent();
                         break;
-                        //not implemented yet
-                    case "create task":
-                        requestFacade.createEventRequest();
-                        break;
-                        //Requests
                     case "view event requests":
                         requestFacade.viewEventRequest();
                         break;
@@ -99,6 +94,12 @@ public class Main
                         //stores 2x needs fix
                     case "update event request":
                         requestFacade.updateEventRequest();
+                        break;
+                    case "approve event request":
+                        if(employee.getEmployeeType().equals("CSManager"))
+                            requestFacade.approveEventRequestCSManager();
+                        else if(employee.isAdmin())
+                            requestFacade.approveEventRequestAdmin();
                         break;
                      //not implemented yet
                     case "create financial request":
@@ -112,7 +113,6 @@ public class Main
             }
             else {
                 System.out.println("Not a recognized command");
-                //break;
             }
             System.out.println("What would you like to do? Please type the action exactly\n");
             printActions(accessRights);

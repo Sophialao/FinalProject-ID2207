@@ -14,10 +14,18 @@ public class RequestFacade {
     public void updateEventRequest(){
         requestHandler.updateRequest();
     }
+    public void approveEventRequestCSManager(){
+        requestHandler.approveEventRequestCSManager();
+    }
+    public void approveEventRequestAdmin(){
+        requestHandler.approveEventRequestAdmin();
+    }
+
     public void createFinancialRequest(){
         requestHandler.createFinancialRequest();
     }
     public void createHRRequest(){
         requestHandler.createHRRequest();
     }
+
 }

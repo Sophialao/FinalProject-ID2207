@@ -10,7 +10,10 @@ public class EventRequest extends Request {
     private String description;
     private String budget;
     private String id;
-    private HashMap<String,String> feedback;
+
+    private boolean approvedByCSManger = false;
+    private boolean approvedByAdmin = false;
+    //private HashMap<String,String> feedback;
 
     public void setID(String id){
         this.id =id;
@@ -54,11 +57,18 @@ public class EventRequest extends Request {
         return budget;
     }
 
+    public boolean approvedByCSManger() { return approvedByCSManger; }
+    //TODO make it so only the CSManager can access it
+    public void setApprovedByCSManger() { approvedByCSManger = true;}
 
-    public void setComment(String user,String comment){
+    public boolean approvedByAdmin() {return approvedByAdmin; }
+    public void setApprovedByAdmin() {approvedByAdmin = true;}
+
+
+    /*public void setComment(String user,String comment){
         feedback.put(user,comment);
     }
     public HashMap getFeedback(){
         return feedback;
-    }
+    }*/
 }

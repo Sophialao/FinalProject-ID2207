@@ -25,17 +25,17 @@ public class EmployeeData
     {
 
         //AccessRights (not all need to be functional)
-        String[] CSManagerAccess = {"view event", "view event requests", "create event request","update request", "approve event request","submit for financial review"};
-        String[] CSEmployeeAccess = {"view event", "create event request", "submit for financial review"};
-        String[] FManagerAccess = {"view event", "add discount", "update event request","view event requests"};
-        String[] FEmployee1Access = {"view event", "update request","view event requests"};
-        String[] PEmployeeAccess = {"view event"};
-        String[] PManagerAccess = {"view event","create task","view employee","view client","update event","update event request","view event requests","create financial request","create HR request"};
-        String[] SManagerAccess = {"view event","view event requests","update request","create task","create financial request","create HR request"};
-        String[] SEmployeeAccess = {"view event"};
-        String[] AdminAccesss = {"view event","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request", "approve event request"};
-        String[] VPresidentAccesss = {"view event","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
-        String[] SudoAccess = {"view event","create financial request","create HR request", "create event request","add discount", "create financial request","create task","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
+        String[] CSManagerAccess = {"view events","create event", "view event requests", "create event request","update request", "approve event request","submit for financial review"};
+        String[] CSEmployeeAccess = {"view events","create event request","view event requests","submit for financial review"};
+        String[] FManagerAccess = {"view events", "add discount", "update event request","view event requests"};
+        String[] FEmployee1Access = {"view events", "update request","view event requests"};
+        String[] PEmployeeAccess = {"view events"};
+        String[] PManagerAccess = {"view events","view employee","view client","update event","update event request","view event requests","create financial request","create HR request"};
+        String[] SManagerAccess = {"view events","view event requests","update request","create financial request","create HR request"};
+        String[] SEmployeeAccess = {"view events"};
+        String[] AdminAccesss = {"view events","create event","edit event", "view employees","edit employees","view clients","edit clients","view event requests","update event request", "approve event request"};
+        String[] VPresidentAccesss = {"view events","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
+        String[] SudoAccess = {"view events","create financial request","create HR request", "create event request","add discount", "create financial request","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
 
         accessRights.put("CSManager",CSManagerAccess);
         accessRights.put("CSEmployee1",CSEmployeeAccess);
@@ -230,6 +230,10 @@ public class EmployeeData
 
     public Employee getEmployee(int employeeID)
     {
+        if(employeeID > employeeData.size() || employeeID < 0)
+        {
+            return null;
+        }
         return employeeData.get(employeeID-1);
     }
 

@@ -28,25 +28,64 @@ public class RequestHandler {
     //allows usr to choose a request to continue with (update/view details)
     public EventRequest chooseEventRequest(){
         Scanner s = new Scanner(System.in);
-        System.out.println("Type the name of an event request to continue");
+        //System.out.println("Type the name of an event request to continue");
+        System.out.println("Type the name of an event request you would like to view");
         String name=s.nextLine();
         if(!requestData.getEventRequests().containsKey(name)){
             System.out.println("Event request " + name +" does not exist");
-            //fix go back if we want
-            //crash
+            //TODO prompt agan if cant find
         }
-
         return requestData.getEventRequest(name);
     }
 
+    public void approveEventRequestCSManager()
+    {
+        showEventRequests();
+        Scanner s = new Scanner(System.in);
+        //System.out.println("Type the name of an event request to continue");
+        System.out.println("Type the name of an event request you would like to approve");
+        //TODO only include events that have not been approved yet
+        String name=s.nextLine();
+        if(!requestData.getEventRequests().containsKey(name)){
+            System.out.println("Event request " + name +" does not exist");
+            //TODO prompt agan if cant find
+        }
+        EventRequest e = requestData.getEventRequest(name);
+        e.setApprovedByCSManger();
+        System.out.println("Event approved!");
+    }
+    public void approveEventRequestAdmin()
+    {
+        showEventRequests();
+        Scanner s = new Scanner(System.in);
+        //System.out.println("Type the name of an event request to continue");
+        System.out.println("Type the name of an event request you would like to approve");
+        //TODO only include events that have not been approved yet
+        String name=s.nextLine();
+        if(!requestData.getEventRequests().containsKey(name)){
+            System.out.println("Event request " + name +" does not exist");
+            //TODO prompt agan if cant find
+        }
+        EventRequest e = requestData.getEventRequest(name);
+        e.setApprovedByAdmin();
+        System.out.println("Event approved!");
+    }
+
     //can be done in a more effective way, loop through
-    private void readRequest(EventRequest e){
+    private void readRequest(EventRequest e)
+    {
+        if(e == null)
+        {
+            return;
+        }
         System.out.println("--- "+e.getName().toUpperCase()+" ---");
         System.out.println("Event name: " + e.getName());
         System.out.println("From: " + e.getStartDate());
         System.out.println("To: "+ e.getEndDate());
         System.out.println("Expected budget: "+ e.getBudget());
         System.out.println("Description: "+ e.getDescription());
+        System.out.println("Aproved by CS Manager: " + e.approvedByCSManger());
+        System.out.println("Approved by Admin: " + e.approvedByAdmin());
     }
     public void createEventRequest(){
         System.out.println("---CREATE EVENT REQUEST---");

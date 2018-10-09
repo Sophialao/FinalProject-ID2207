@@ -12,7 +12,7 @@ public class Employee
     private String phoneNumber;
     private boolean isAdmin;
     //if the employee is a customer service employee or not
-    private boolean isCS;
+    //private boolean isCS;
     private String employeeType;
     private String[] accessRights;
 
@@ -30,7 +30,7 @@ public class Employee
         this.accessRights=accessRights;
     }
 
-
+    public int getEmployeeID() {return employeeID; }
     public String getName() { return name; }
     public String getAdress() { return address; }
     public int getHourlyPay() { return hourlyPay; }

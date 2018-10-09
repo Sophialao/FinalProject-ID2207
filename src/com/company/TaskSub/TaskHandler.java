@@ -11,6 +11,12 @@ import java.util.Scanner;
 
 public class TaskHandler
 {
+    //for task creation enter name of employee
+    //put employee name for print out
+
+    //make sure only P and S employees can get tasks
+    //only P managers can see
+
     public void createTask(Event event, EmployeeData employeeData)
     {
         System.out.println("---CREATE NEW TASK---");
