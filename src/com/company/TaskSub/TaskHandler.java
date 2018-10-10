@@ -11,42 +11,55 @@ import java.util.Scanner;
 
 public class TaskHandler
 {
-    //for task creation enter name of employee
-    //put employee name for print out
-
-    //make sure only P and S employees can get tasks
-    //only P managers can see
-
-    public void createTask(Event event, EmployeeData employeeData)
+    public void createTask(Event event, EmployeeData employeeData,boolean SManager,boolean PManager)
     {
         System.out.println("---CREATE NEW TASK---");
         Task task = new Task();
-        Task t = fillInTask(task,employeeData,event);
+        Task t = fillInTask(task,employeeData,event,SManager,PManager);
 
         if(t == null)
         {
             return;
         }
-        event.addTaskToEmployee(t.getEmployee().getEmployeeID(),t);
+        event.addTaskToEmployee(t.getEmployee().getEmployeeID(),t,SManager,PManager);
         //storeEvent(e);
-        System.out.println("Task -"+t.getName()+ "- created! ");
+        System.out.println("Task -"+t.getName()+ "- created! \n");
     }
 
-    private Task fillInTask(Task task, EmployeeData employeeData,Event event)
+    private Task fillInTask(Task task, EmployeeData employeeData,Event event,boolean SManager, boolean PManager)
     {
         Scanner s = new Scanner(System.in);
         System.out.print("Task name: ");
         String name=s.nextLine();
         task.setName(name);
-        System.out.print("EmployeeID: ");
-        if(!s.hasNextInt())
-        {
-            System.out.println("invalid input");
-            return null;
+        int employeeID = 0;
+        Employee employee = null;
+
+        while(employee == null) {
+            System.out.print("Employee to assign to task: ");
+            String employeeName = s.nextLine();
+            employeeID = employeeData.getEmployeeID(employeeName);
+
+            while (employeeID == 0) {
+                System.out.print("Employee not recognized, please retype employee name: ");
+                employeeName = s.nextLine();
+                employeeID = employeeData.getEmployeeID(employeeName);
+            }
+            employee = employeeData.getEmployee(employeeID);
+
+            if (SManager) {
+                if (!employee.getEmployeeType().equals("SEmployee")) {
+                    System.out.println("No permission to assign task to " + employeeName);
+                    employee = null;
+                }
+            } else if (PManager) {
+                if (!employee.getEmployeeType().equals("PEmployee")) {
+                    System.out.println("No permission to assign  task to " + employeeName);
+                    employee = null;
+                }
+            }
         }
-        int employeeID = s.nextInt();
-        Employee employee = employeeData.getEmployee(employeeID);
-        //TODO check validaty of the employee!
+
         task.setEmployee(employee);
         task.setEvent(event);
         //clearing the buffer of the scanner
@@ -58,34 +71,32 @@ public class TaskHandler
         return task;
     }
 
-    public void viewTasks(Event event,int employeeID,boolean manager)
+    public void viewTasks(Event event,int employeeID,boolean SManager,boolean PManager)
     {
-       if(manager)
+       if(SManager || PManager)
        {
-           Iterator<ArrayList<Task>> iterator = event.getAllTasks();
 
-           if(!iterator.hasNext())
+           //Iterator<ArrayList<Task>> iterator = event.getAllTasks(SManager,PManager);
+            ArrayList<Task> arrayList = event.getAllTasks(SManager,PManager);
+
+           if(arrayList.isEmpty())
            {
-               System.out.println("There are currently no tasks for this event");
+               System.out.println("There are currently no tasks for this event\n");
                return;
            }
 
            System.out.println("---VIEW TASKS---");
-           while(iterator.hasNext())
+           for(Task t: arrayList)
            {
-               ArrayList<Task> arrayList = iterator.next();
-               for(Task t: arrayList)
-               {
-                   System.out.println(t.getName() + ": " + t.getDescription());
-               }
+               System.out.println("Assigned to " + t.getEmployee().getName() + "-" + t.getName() + ": " + t.getDescription());
            }
 
        }
        else {
            ArrayList<Task> tasks = event.getTasks(employeeID);
-           if(tasks.isEmpty())
+           if(tasks == null || tasks.isEmpty())
            {
-               System.out.println("You don't currently have any tasks for this event");
+               System.out.println("You don't currently have any tasks for this event\n");
                return;
            }
            System.out.println("---YOUR TASKS---");
