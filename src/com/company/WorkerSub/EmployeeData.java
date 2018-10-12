@@ -30,8 +30,8 @@ public class EmployeeData
         String[] FManagerAccess = {"view events", "add discount", "update event request","view event requests"};
         String[] FEmployee1Access = {"view events", "update request","view event requests"};
         String[] PEmployeeAccess = {"view events"};
-        String[] PManagerAccess = {"view events","view employee","view client","update event","update event request","view event requests","create financial request","create HR request"};
-        String[] SManagerAccess = {"view events","view event requests","update request","create financial request","create HR request"};
+        String[] PManagerAccess = {"view events","view employees","view client","update event","update event request","view event requests","create financial request","create HR request"};
+        String[] SManagerAccess = {"view events","view employees", "view event requests","update event", "update event request","create financial request","create HR request"};
         String[] SEmployeeAccess = {"view events"};
         String[] AdminAccesss = {"view events","create event","edit event", "view employees","edit employees","view clients","edit clients","view event requests","update event request", "approve event request"};
         String[] VPresidentAccesss = {"view events","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
@@ -225,6 +225,10 @@ public class EmployeeData
     }
     public int getEmployeeID(String userName)
     {
+        if(!userNameToEmployeeID.containsKey(userName.trim()))
+        {
+            return 0;
+        }
         return userNameToEmployeeID.get(userName.trim());
     }
 

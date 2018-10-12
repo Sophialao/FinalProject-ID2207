@@ -17,6 +17,10 @@ public class Event {
     private String feedback;
 
     private HashMap<Integer, ArrayList<Task>> taskByEmployeeId = new HashMap<>();
+    //These two are only for Managers to quickly loop though the tasks
+
+    ArrayList<Task> STaskByEmployeeId = new ArrayList<Task>();
+    ArrayList<Task> PTaskByEmployeeId = new ArrayList<Task>();
 
     public void setName(String name){
         this.name=name;
@@ -53,7 +57,7 @@ public class Event {
     }
 
 
-    public void addTaskToEmployee(int employeeId,Task task)
+    public void addTaskToEmployee(int employeeId,Task task,boolean SManager, boolean PManager)
     {
         ArrayList arrayList = taskByEmployeeId.get(employeeId);
         if(arrayList == null)
@@ -63,16 +67,27 @@ public class Event {
         arrayList.add(task);
         //Is it necessary to put back in...??
         taskByEmployeeId.put(employeeId,arrayList);
+        if(SManager)
+            STaskByEmployeeId.add(task);
+        else if(PManager)
+            PTaskByEmployeeId.add(task);
     }
     public ArrayList<Task> getTasks(int employeeId)
     {
+        if(!taskByEmployeeId.containsKey(employeeId))
+        {
+            return null;
+        }
         return taskByEmployeeId.get(employeeId);
     }
-    public Iterator<ArrayList<Task>> getAllTasks()
+    public ArrayList<Task> getAllTasks(boolean SManager,boolean PManager)
     {
-        Collection<ArrayList<Task>> collection = taskByEmployeeId.values();
-        Iterator<ArrayList<Task>> iterator = collection.iterator();
-        return iterator;
+        //Collection<ArrayList<Task>> collection = taskByEmployeeId.values();
+        //Iterator<ArrayList<Task>> iterator = collection.iterator();
+        if(SManager)
+            return STaskByEmployeeId;
+        else
+            return PTaskByEmployeeId;
     }
 
 }

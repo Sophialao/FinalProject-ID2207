@@ -44,17 +44,25 @@ public class EventHandler {
             return;
         readEvent(event);
 
-        TaskFacade taskFacade = new TaskFacade();
         String employeeType = employee.getEmployeeType();
+        if(!employeeType.equals("SManager") && !employeeType.equals("SEmployee") &&
+                !employeeType.equals("PManager") && !employeeType.equals("PEmployee"))
+        {
+            return;
+        }
+
+        TaskFacade taskFacade = new TaskFacade();
+        //String employeeType = employee.getEmployeeType();
         Scanner s = new Scanner(System.in);
         String input = new String();
 
         while(!input.equals("exit"))
         {
-            System.out.println("Would you like to do regarding this event?");
+            System.out.println("\nWould you like to do regarding this event?");
 
-            boolean manager = employeeType.equals("SManager") || employeeType.equals("FManager");
-            if (manager)
+            boolean SManager = employeeType.equals("SManager");
+            boolean PManager = employeeType.equals("PManager");
+            if(SManager || PManager)
             {
                 System.out.println("view tasks, assign task, edit tasks, or exit");
             }
@@ -64,19 +72,19 @@ public class EventHandler {
             input = s.nextLine();
             switch (input) {
                 case "view tasks":
-                    taskFacade.viewTasks(event, employee.getEmployeeID(), manager);
+                    taskFacade.viewTasks(event, employee.getEmployeeID(), SManager,PManager);
                     break;
                 case "assign task":
-                    if (!manager)
+                    if(!SManager && !PManager)
                     {
                         System.out.println("No permission");
                         break;
                     }
-                    taskFacade.createTask(event, employeeData);
+                    taskFacade.createTask(event, employeeData,SManager,PManager);
                     break;
                 case "edit tasks":
                     System.out.println("There is currently no way to edit tasks on this system" +
-                            "\n we are working towards making this feature avaible.");
+                            "\n we are working towards making this feature avaible.\n");
                     break;
                 case "exit":
                     break;

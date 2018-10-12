@@ -109,6 +109,8 @@ public class Main
                         requestFacade.createHRRequest();
                         break;
 
+                    case "view employees":
+                        System.out.println("Not yet implemented");
                  }
             }
             else {
