@@ -3,6 +3,7 @@
 Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
 
 StartUp data to make testing easier:
+
 *bob (EventRequest)- has a financial request associated with it
 *party (EventRequest) - has been approved by both Admin and CSManager
 
