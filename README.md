@@ -14,7 +14,9 @@ StartUp data to make testing easier:
 
 Functionality:
 *You can now create and handle financial and HR requests.
+
 -HREmployee (pass=pass) can handle HR requests
+
 -FManager can handle financial requests
 
 *You can add a discount to an event request
@@ -24,6 +26,7 @@ Functionality:
 *Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
 
 Things that need fixing:
+
 *When in "approve event request" all requests are displayed, not just the ones that need to be approved
 
 *When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
