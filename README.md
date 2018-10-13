@@ -2,6 +2,30 @@
 
 Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
 
+StartUp data to make testing easier:
+*bob (EventRequest)- has a financial request associated with it
+*party (EventRequest) - has been approved by both Admin and CSManager
+
+*TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
+
+*Task - startup task must be added to "db" to be accessible
+
+Functionality:
+*You can now create and handle financial and HR requests.
+-HREmployee (pass=pass) can handle HR requests
+-FManager can handle financial requests
+
+*You can add a discount to an event request
+*You can add a comment to a task
+
+*Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
+
+Things that need fixing:
+*When in "approve event request" all requests are displayed, not just the ones that need to be approved
+
+*When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID
+
+--------------------------
 All tasks are handled through events!!
 
 //Henri does this for next iteration
@@ -9,6 +33,7 @@ All tasks are handled through events!!
 //Adding comments on events
 
 //some way to link an event request to an event?
+They are linked through a unique name imo
 
 
 //todo: make sure you can only make an event if there is an event request?
