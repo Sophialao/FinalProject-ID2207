@@ -5,6 +5,7 @@ Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
 StartUp data to make testing easier:
 
 *bob (EventRequest)- has a financial request associated with it
+
 *party (EventRequest) - has been approved by both Admin and CSManager
 
 *TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
@@ -17,6 +18,7 @@ Functionality:
 -FManager can handle financial requests
 
 *You can add a discount to an event request
+
 *You can add a comment to a task
 
 *Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
