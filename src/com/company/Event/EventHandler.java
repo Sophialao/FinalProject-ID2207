@@ -112,19 +112,19 @@ public class EventHandler {
         System.out.println("Budget: "+ e.getBudget());
         System.out.println("Description: "+ e.getDescription());
     }
-    public void createEvent(){
-        System.out.println("---CREATE EVENT REQUEST---");
+    public void createEvent(String name){
+        System.out.println("---CREATE EVENT ---");
         Event event = new Event();
-        Event e=fillInEvent(event);
+        Event e=fillInEvent(event,name);
         storeEvent(e);
         System.out.println("Event -"+event.getName()+ "- created! ");
     }
     //can be done in a more effective way
-    private Event fillInEvent(Event event){
-
-        System.out.print("Event name: ");
-        String name=s.nextLine();
+    private Event fillInEvent(Event event, String name){
         event.setName(name);
+        System.out.println("--- "+ name.toUpperCase()+" ---");
+        System.out.println("Event name: " + name);
+
         System.out.print("From: ");
         String from=s.nextLine();
         event.setStartDate(from);
@@ -155,8 +155,15 @@ public class EventHandler {
         Scanner s = new Scanner(System.in);
         String oldName= oldEvent.getName();
         System.out.println("---- UPDATE "+oldEvent.getName().toUpperCase()+"----");
-        Event newEvent= fillInEvent(oldEvent);
+        Event newEvent= fillInEvent(oldEvent,oldName);
         eventData.updateEvent(newEvent,oldName);
 
+    }
+    public void startUp(){
+        eventData.startUp();
+    }
+
+    public Event getEvent(String name){
+        return eventData.getEvent(name);
     }
 }

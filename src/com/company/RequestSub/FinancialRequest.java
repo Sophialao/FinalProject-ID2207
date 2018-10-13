@@ -7,7 +7,10 @@ import com.company.WorkerSub.Department;
 public class FinancialRequest extends Request {
     private String description;
     private String id;
-    private Department requestingDepartment;
+    private String requestingDepartment;
+    private String ref;
+    private String amount;
+    private String concerning;
 
     public void setID(String id){
         this.id =id;
@@ -22,11 +25,33 @@ public class FinancialRequest extends Request {
         return description;
     }
 
-    public void setReuestingDepartment(Department requestingDepartment){
+    public void setReuestingDepartment(String requestingDepartment){
         this.requestingDepartment=requestingDepartment;
     }
-    public Department getReuestingDepartment(){
+    public String getReuestingDepartment(){
         return requestingDepartment;
     }
+
+    public void setRef(String ref){
+        this.ref=ref;
+    }
+    public String getRef(){
+        return ref;
+    }
+
+    public void setConcerningRequest(String con){
+        this.concerning=con;
+    }
+    public String getConcerningRequest(){
+        return concerning;
+    }
+
+    public void setAmount(String amount){
+        this.amount=amount;
+    }
+    public String getAmount(){
+        return amount;
+    }
+
 
 }

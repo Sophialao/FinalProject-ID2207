@@ -3,9 +3,11 @@
  */
 package com.company;
 
+import com.company.Event.Event;
 import com.company.Event.EventData;
 import com.company.Event.EventFacade;
 import com.company.RequestSub.RequestFacade;
+import com.company.TaskSub.TaskFacade;
 import com.company.WorkerSub.Employee;
 import com.company.WorkerSub.EmployeeData;
 
@@ -25,8 +27,16 @@ public class Main
         EventData eventData = new EventData();
         RequestFacade requestFacade = new RequestFacade();
         EventFacade eventFacade = new EventFacade();
+        TaskFacade taskFacade = new TaskFacade();
 
+        // fake db
         employeeData.startUp();
+        requestFacade.startUp();
+        eventFacade.startUp();
+
+        Employee empl=employeeData.getEmployee(6);
+        Event testEvent = eventFacade.getEvent("TestEvent");
+        taskFacade.startUp(empl,testEvent);
 
 
        //Loop while not yet logged in
@@ -45,7 +55,7 @@ public class Main
             System.out.println("Welcome " + user.getName());
 
             printMainMenu();
-            showActions(user, eventData, requestFacade, eventFacade,employeeData);
+            showActions(user,eventData, taskFacade,requestFacade, eventFacade,employeeData);
             loggedIn = false;
             //Loop when logged in
             /*while (loggedIn)
@@ -58,7 +68,7 @@ public class Main
         }
     }
     //Display available actions and check access rights, loop while waiting for choice
-    private static void showActions(Employee employee,EventData eventData,RequestFacade requestFacade, EventFacade eventFacade, EmployeeData employeeData) {
+    private static void showActions(Employee employee,EventData eventData,TaskFacade taskFacade,RequestFacade requestFacade, EventFacade eventFacade, EmployeeData employeeData) {
 
         Scanner s = new Scanner(System.in);
         //get access rights and print actions
@@ -78,9 +88,19 @@ public class Main
                         eventFacade.viewEvent(employee,employeeData);
                     //if has rights allow update
                         break;
-                    //maybe "open event instead"
                     case "create event":
-                        eventFacade.createEvent();
+                        requestFacade.showEventRequests();
+                        System.out.println("Input name of request you want to use to start an event");
+                        System.out.println("must have been approved by Admin and CSManager");
+
+                        String eventBasedOnRequest = s.nextLine();
+                        boolean ok =requestFacade.checkApproval(eventBasedOnRequest);
+
+                        if(ok){
+                            eventFacade.createEvent(eventBasedOnRequest);
+                            break;
+                        }
+                        System.out.println("The event request you are attempting to turn into an event has not been approved by both a CSManager and an administrator or has open HR/Financial requests");
                         break;
                     case "update event":
                         eventFacade.updateEvent();
@@ -91,26 +111,60 @@ public class Main
                     case "create event request":
                         requestFacade.createEventRequest();
                         break;
+
                         //stores 2x needs fix
                     case "update event request":
                         requestFacade.updateEventRequest();
                         break;
                     case "approve event request":
-                        if(employee.getEmployeeType().equals("CSManager"))
-                            requestFacade.approveEventRequestCSManager();
-                        else if(employee.isAdmin())
-                            requestFacade.approveEventRequestAdmin();
+                        // displays all not only the ones that need approval
+                        requestFacade.showEventRequests();
+                        System.out.println("Type the name of an event request you would like to approve");
+                        String name = s.nextLine();
+                        boolean exists=requestFacade.eventRequestExists(name);
+
+                        if (exists){
+                            requestFacade.approveEventRequests(name, employee);
+                        }
+                        else{
+                            System.out.println("EventRequest does not exist");
+                        }
                         break;
-                     //not implemented yet
                     case "create financial request":
                         requestFacade.createFinancialRequest();
                         break;
                     case "create HR request":
                         requestFacade.createHRRequest();
                         break;
-
+                    case "review HR requests":
+                        requestFacade.viewEventRequestsAwaitingApproval("HR");
+                        requestFacade.readHRRequest();
+                        break;
+                    case "review financial requests":
+                        requestFacade.viewEventRequestsAwaitingApproval("financial");
+                        // display request
+                        requestFacade.readFRequest();
+                        break;
+                    case "add discount":
+                        requestFacade.showEventRequests();
+                        System.out.println("For which event request would you like to add a discount?");
+                        String nameOfRequest = s.nextLine();
+                        requestFacade.addDiscount(nameOfRequest);
+                        break;
+                        // start up doesnt work yet
+                    case "comment on task":
+                        //show events for this employee
+                        System.out.println(" Select event: ");
+                        // gets stuck need another method, show events is not based on ID
+                        //eventFacade.viewEvent(employee,employeeData);
+                        String selection = s.nextLine();
+                        Event ev=eventFacade.getEvent(selection);
+                        taskFacade.viewOwnTasks(ev,employee.getEmployeeID());
+                        taskFacade.addCommentToTask(employee.getEmployeeID(),ev);
+                        break;
                     case "view employees":
                         System.out.println("Not yet implemented");
+                        break;
                  }
             }
             else {

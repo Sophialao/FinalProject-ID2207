@@ -59,13 +59,15 @@ public class Event {
 
     public void addTaskToEmployee(int employeeId,Task task,boolean SManager, boolean PManager)
     {
-        ArrayList arrayList = taskByEmployeeId.get(employeeId);
+        ArrayList arrayList = taskByEmployeeId.remove(employeeId);
         if(arrayList == null)
         {
             arrayList = new ArrayList<Task>();
         }
         arrayList.add(task);
         //Is it necessary to put back in...??
+        // yes, and remove old version as well (used remove above)
+
         taskByEmployeeId.put(employeeId,arrayList);
         if(SManager)
             STaskByEmployeeId.add(task);

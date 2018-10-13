@@ -10,6 +10,7 @@ public class EventRequest extends Request {
     private String description;
     private String budget;
     private String id;
+    String discount;
 
     private boolean approvedByCSManger = false;
     private boolean approvedByAdmin = false;
@@ -64,7 +65,12 @@ public class EventRequest extends Request {
     public boolean approvedByAdmin() {return approvedByAdmin; }
     public void setApprovedByAdmin() {approvedByAdmin = true;}
 
-
+    public void setDiscount(String discount){
+        this.discount=discount;
+    }
+    public String getDiscount(){
+        return discount;
+    }
     /*public void setComment(String user,String comment){
         feedback.put(user,comment);
     }

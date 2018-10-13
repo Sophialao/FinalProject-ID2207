@@ -9,6 +9,7 @@ public class Task
     private Employee employee;
     private Event event;
     private String description;
+    private Comment c;
 
     public void setName(String name){
         this.name=name;
@@ -36,6 +37,13 @@ public class Task
     }
     public Event getEvent(){
         return event;
+    }
+
+    public void setComment(Comment c){
+        this.c=c;
+    }
+    public Comment getComment(){
+        return c;
     }
 
 }

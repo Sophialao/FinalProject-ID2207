@@ -25,18 +25,21 @@ public class EmployeeData
     {
 
         //AccessRights (not all need to be functional)
-        String[] CSManagerAccess = {"view events","create event", "view event requests", "create event request","update request", "approve event request","submit for financial review"};
-        String[] CSEmployeeAccess = {"view events","create event request","view event requests","submit for financial review"};
-        String[] FManagerAccess = {"view events", "add discount", "update event request","view event requests"};
-        String[] FEmployee1Access = {"view events", "update request","view event requests"};
-        String[] PEmployeeAccess = {"view events"};
-        String[] PManagerAccess = {"view events","view employees","view client","update event","update event request","view event requests","create financial request","create HR request"};
-        String[] SManagerAccess = {"view events","view employees", "view event requests","update event", "update event request","create financial request","create HR request"};
+        String[] CSManagerAccess = {"view events","create event", "view event requests", "create event request","update event request", "approve event request","create financial request"};
+        String[] CSEmployeeAccess = {"view events","create event request","view event requests","create financial request"};
+        String[] FManagerAccess = {"view events", "add discount", "update event request","view event requests", "review financial requests"};
+        String[] FEmployee1Access = {"view events", "update event request","view event requests"};
+        String[] PEmployeeAccess = {"view events","comment on task"};
+        String[] PManagerAccess = {"view events","view employee","view client","update event","update event request","view event requests","create financial request","create HR request"};
+        String[] SManagerAccess = {"view events","view event requests","update event request","create financial request","create HR request"};
         String[] SEmployeeAccess = {"view events"};
         String[] AdminAccesss = {"view events","create event","edit event", "view employees","edit employees","view clients","edit clients","view event requests","update event request", "approve event request"};
         String[] VPresidentAccesss = {"view events","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
         String[] SudoAccess = {"view events","create financial request","create HR request", "create event request","add discount", "create financial request","view employees","edit employees","view clients","edit clients","edit event","view event requests","update event request"};
 
+        String[] HREmployeeAccess = {"view events", "review HR requests"};
+
+        accessRights.put("HREmployee",HREmployeeAccess);
         accessRights.put("CSManager",CSManagerAccess);
         accessRights.put("CSEmployee1",CSEmployeeAccess);
         accessRights.put("CSEmployee2",CSEmployeeAccess);
@@ -162,6 +165,17 @@ public class EmployeeData
                 , 16, "3035138366","Secertary",false,AdminAccesss));
         employeeData.add(new Manager(23, "VPresident", "887 Grand St, Parklang, Wy, 78960"
                 , 30, "8765890869", "VPresdent",false,VPresidentAccesss));
+
+        employeeData.add(new Employee(24, "HREmployee", "11 Johnson street, Deerson Al, 70374"
+                , 16, "3035138366","HREmployee",true,HREmployeeAccess));
+
+        //for testing
+        employeeData.add(new Employee(23, "emp", "11 Johnson street, Deerson Al, 70374"
+                , 16, "3035138366","Service",false,SudoAccess));
+
+        employeeCredentials.put("emp","emp");
+
+        employeeCredentials.put("HREmployee","pass");
         employeeCredentials.put("CSEmployee1","CSEmployee1Pass");
         employeeCredentials.put("CSEmployee2","CSEmployee2Pass");
         employeeCredentials.put("CSManager","CSManagerPass");
@@ -209,12 +223,9 @@ public class EmployeeData
         userNameToEmployeeID.put("Secretary",20);
         userNameToEmployeeID.put("VPresident",22);
 
+        userNameToEmployeeID.put("emp",23);
+        userNameToEmployeeID.put("HREmployee",24);
 
-        //for testing
-        employeeData.add(new Employee(10, "emp", "11 Johnson street, Deerson Al, 70374"
-                , 16, "3035138366","Service",false,SudoAccess));
-        employeeCredentials.put("emp","emp");
-        userNameToEmployeeID.put("emp",10);
     }
 
     public String[] getAccessRights(Employee employee){

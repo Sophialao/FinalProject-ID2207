@@ -27,4 +27,14 @@ public class EventData {
         eventByName.remove(key);
         eventByName.put(e.getName(),e);
     }
+    public void startUp(){
+        Event e = new Event();
+        e.setBudget("12");
+        e.setDescription("aldjla");
+        e.setEndDate("2");
+        e.setName("TestEvent");
+        e.setStartDate("1");
+
+        addNewEvent(e);
+    }
 }

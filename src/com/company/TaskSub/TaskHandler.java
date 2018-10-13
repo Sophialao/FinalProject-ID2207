@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class TaskHandler
 {
+    Scanner scan = new Scanner(System.in);
     public void createTask(Event event, EmployeeData employeeData,boolean SManager,boolean PManager)
     {
         System.out.println("---CREATE NEW TASK---");
@@ -73,36 +74,94 @@ public class TaskHandler
 
     public void viewTasks(Event event,int employeeID,boolean SManager,boolean PManager)
     {
-       if(SManager || PManager)
-       {
+        if(SManager || PManager)
+        {
 
-           //Iterator<ArrayList<Task>> iterator = event.getAllTasks(SManager,PManager);
+            //Iterator<ArrayList<Task>> iterator = event.getAllTasks(SManager,PManager);
             ArrayList<Task> arrayList = event.getAllTasks(SManager,PManager);
 
-           if(arrayList.isEmpty())
-           {
-               System.out.println("There are currently no tasks for this event\n");
-               return;
-           }
+            if(arrayList.isEmpty())
+            {
+                System.out.println("There are currently no tasks for this event\n");
+                return;
+            }
 
-           System.out.println("---VIEW TASKS---");
-           for(Task t: arrayList)
-           {
-               System.out.println("Assigned to " + t.getEmployee().getName() + "-" + t.getName() + ": " + t.getDescription());
-           }
+            System.out.println("---VIEW TASKS---");
+            for(Task t: arrayList)
+            {
+                System.out.println("Assigned to " + t.getEmployee().getName() + "-" + t.getName() + ": " + t.getDescription());
+            }
 
-       }
-       else {
-           ArrayList<Task> tasks = event.getTasks(employeeID);
-           if(tasks == null || tasks.isEmpty())
-           {
-               System.out.println("You don't currently have any tasks for this event\n");
-               return;
-           }
-           System.out.println("---YOUR TASKS---");
-           for (Task t : tasks) {
-               System.out.println(t.getName() + ": " + t.getDescription());
-           }
-       }
+        }
+        else {
+            ArrayList<Task> tasks = event.getTasks(employeeID);
+            if(tasks == null || tasks.isEmpty())
+            {
+                System.out.println("You don't currently have any tasks for this event\n");
+                return;
+            }
+            System.out.println("---YOUR TASKS---");
+            for (Task t : tasks) {
+                System.out.println(t.getName() + ": " + t.getDescription());
+            }
+        }
     }
+
+    public void viewOwnTasks(Event ev,int empID){
+        System.out.println(" Event:  "+ev.getName()+" selected");
+        ArrayList tasks = ev.getTasks(empID);
+
+
+        if(tasks!=null){
+            System.out.println("Tasks available for selected event: "+tasks.size());
+            for(int i=0;i<tasks.size();i++){
+                Task t= (Task)tasks.get(i);
+                System.out.println(t.getName());
+            }
+        }
+        else{
+            System.out.println("There are no tasks assigned to you for the selected event");
+        }
+
+
+    }
+    public void addCommentToTask(int empID, Event ev){
+
+        ArrayList tasks = ev.getTasks(empID);
+        System.out.println(" Select task: ");
+        String task = scan.nextLine();
+
+        System.out.println("--- COMMENTING ON "+task.toUpperCase()+" ---");
+        if(tasks!=null) {
+            for (int i = 0; i < tasks.size(); i++) {
+                Task t = (Task) tasks.get(i);
+                if (t.getName().equals(task)) {
+                    addComment(t, empID);
+                }
+            }
+        }
+
+    }
+    private void addComment(Task t, int empID){
+        System.out.println(" Add a comment: ");
+        Comment c = new Comment();
+        String input = scan.nextLine();
+        c.setComment(input);
+        c.setEmployeeID(empID);
+        t.setComment(c);
+        System.out.println("Comment added!");
+
+    }
+    // doesnt work because task is never added
+    public void startUp(Employee empl, Event testEvent){
+        Task t = new Task();
+        t.setDescription("Test task");
+        t.setEmployee(empl);
+        t.setEvent(testEvent);
+        t.setName("Make a cake");
+
+        // problem
+        //testEvent.addTaskToEmployee();
+    }
+
 }

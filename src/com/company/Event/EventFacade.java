@@ -10,8 +10,8 @@ public class EventFacade {
         eventHandler.showEvents();
     }
 
-    public void createEvent(){
-        eventHandler.createEvent();
+    public void createEvent(String name){
+        eventHandler.createEvent(name);
 
     }
     public void viewEvent(Employee employee, EmployeeData employeeData){
@@ -20,5 +20,12 @@ public class EventFacade {
 
     public void updateEvent(){
         eventHandler.updateEvent();
+    }
+
+    public void startUp(){
+        eventHandler.startUp();
+    }
+    public Event getEvent(String name){
+        return eventHandler.getEvent(name);
     }
 }
