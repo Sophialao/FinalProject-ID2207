@@ -24,7 +24,7 @@ Functionality:
 Things that need fixing:
 *When in "approve event request" all requests are displayed, not just the ones that need to be approved
 
-*When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID
+*When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
 
 --------------------------
 All tasks are handled through events!!
