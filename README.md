@@ -4,26 +4,26 @@ Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
 
 StartUp data to make testing easier:
 
-  o bob (EventRequest)- has a financial request associated with it
-  o party (EventRequest) - has been approved by both Admin and CSManager
-  o TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
-  o Task - startup task must be added to "db" to be accessible
+    o bob (EventRequest)- has a financial request associated with it
+    o party (EventRequest) - has been approved by both Admin and CSManager
+    o TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
+    o Task - startup task must be added to "db" to be accessible
 
 Functionality:
 
-  o You can now create and handle financial and HR requests.
+    o You can now create and handle financial and HR requests.
 
-    -HREmployee (pass=pass) can handle HR requests
-    -FManager can handle financial requests
+      -HREmployee (pass=pass) can handle HR requests
+      -FManager can handle financial requests
 
-  o You can add a discount to an event request
-  o You can add a comment to a task
-  o Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
+    o You can add a discount to an event request
+    o You can add a comment to a task
+    o Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
 
 Things that need fixing:
 
-  o When in "approve event request" all requests are displayed, not just the ones that need to be approved
-  o When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
+    o When in "approve event request" all requests are displayed, not just the ones that need to be approved
+    o When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
 
 --------------------------
 All tasks are handled through events!!
