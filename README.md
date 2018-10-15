@@ -28,6 +28,8 @@ Vice President - VPresident:Pass<br/>
 
 bob (EventRequest)- has a financial request associated with it<br/>
 party (EventRequest) - has been approved by both Admin and CSManager
+<br/>
+<br/>
 
 ##### Futher actions to be done:
 
