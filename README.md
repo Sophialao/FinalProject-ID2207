@@ -1,7 +1,7 @@
 # FinalProjectID2207
 
 Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
-After compiling, the code can be using the employee logins provided below.
+After compiling, the code can be run using the employee logins provided below.
     
 #### Login Credentials
 
