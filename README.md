@@ -1,70 +1,8 @@
 # FinalProjectID2207
 
 Final Project for ID2207 by Henrietta Hellberg and Sophia Lao.
-
-StartUp data to make testing easier:
-
-    o bob (EventRequest)- has a financial request associated with it
-    o party (EventRequest) - has been approved by both Admin and CSManager
-    o TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
-    o Task - startup task must be added to "db" to be accessible
-
-Functionality:
-
-    o You can now create and handle financial and HR requests.
-
-      -HREmployee (pass=pass) can handle HR requests
-      -FManager can handle financial requests
-
-    o You can add a discount to an event request
-    o You can add a comment to a task
-    o Events can not be started unless the event request they are based on has not been approved by both a CSManager and someone from Administration
-
-Things that need fixing:
-
-    o When in "approve event request" all requests are displayed, not just the ones that need to be approved
-    o When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
-
---------------------------
-All tasks are handled through events!!
-
-//Henri does this for next iteration
-//Not done - HR request, finical request, commenting on event requests and events
-//Adding comments on events
-
-//some way to link an event request to an event?
-They are linked through a unique name imo
-
-
-//todo: make sure you can only make an event if there is an event request?
-//checking all input?
-
-//iteration 2
-
--Overview-
-There is a test user called "emp" password "emp" with authority to do most things for testing purposes.
-
-Everything should go through the facades
-
-EmployeeData = database for worker system
-RequestData = database for HR/Financial/Event requests
-EventData = database for events
-
-LoginHandler = handles stuff related to being logged in (we might want to add logging out)
-EventHandler = (right now same as requests but will change) should handle events
-RequestHandler = should handle everything related to requests
-
-You can now
-create event request
-view event requests
-update event request
-
-
-All users should have mostly correct access rights(can be changed in EmployeeData) and only be able to view and execute the correct ones.
-
-//started financial request and HR request
-
-//iteration 1
+After compiling, the code can be using the employee logins provided below.
+    
 #### Login Credentials
 
 (Employee type - UserName:password)<br/>
@@ -85,3 +23,15 @@ Administration Manager - AManager:Pass<br/>
 Admin Employee - AEmployee1:Pass<br/>
 <br/>
 Vice President - VPresident:Pass<br/>
+
+#### Sample data already in the system:
+
+    o bob (EventRequest)- has a financial request associated with it
+    o party (EventRequest) - has been approved by both Admin and CSManager
+    o TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
+    o Task - startup task must be added to "db" to be accessible
+
+Futher actions to be done:
+
+    o When in "approve event request" all requests are displayed, not just the ones that need to be approved
+    o When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
