@@ -25,13 +25,9 @@ Admin Employee - AEmployee1:Pass<br/>
 Vice President - VPresident:Pass<br/>
 
 #### Sample data already in the system:
+bob (EventRequest)- has a financial request associated with it<br/>
+party (EventRequest) - has been approved by both Admin and CSManager
 
-    o bob (EventRequest)- has a financial request associated with it
-    o party (EventRequest) - has been approved by both Admin and CSManager
-    o TestEvent - Is a test event that is not based on an event request, would not be able to exist if it wasn't hard coded
-    o Task - startup task must be added to "db" to be accessible
-
-Futher actions to be done:
-
-    o When in "approve event request" all requests are displayed, not just the ones that need to be approved
-    o When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.
+##### Futher actions to be done:
+When in "approve event request" all requests are displayed, not just the ones that need to be approved<br/>
+When in "comment on task" available events are not displayed because viewevents gets stuck in loop and show events is not based on employeeID.<br/>
